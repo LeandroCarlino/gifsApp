@@ -1,1 +1,5 @@
-<p>resultados works!</p>
+<ul>
+    <li *ngFor="let gif of resultados">
+        <img [src]="gif.images.downsized_medium.url" [alt]="gif.title">
+    </li>
+</ul>
