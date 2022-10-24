@@ -14,12 +14,16 @@ body {
 }
 
 @media (max-width: 800px) {
+  body {
+    font-size: 115%;
+  }
+
   .main-container {
     display: flex;
     flex-direction: column;
   }
 
   #sidebar {
-    min-height: 500px;
+    min-height: 200px;
   }
 }
