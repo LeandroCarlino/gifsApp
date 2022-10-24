@@ -1,9 +1,29 @@
 <div class="col">
-    <h5>Buscar:</h5>
-    <input 
-        type="text" 
-        class="form-control" 
-        placeholder="Buscar gifs..." 
-        (keyup.enter)="search()"
-        #txtBuscar/>
+  <h2>GIFS APP</h2>
+  <p>Escribe una palabra o frase en la caja de texto para buscar gifs...</p>
+  <h5>Buscar:</h5>
+  <div class="col" style="display: flex; flex-direction: row">
+    <input
+      type="text"
+      class="form-control mb-3"
+      style="width: 90%; margin-right: 1em"
+      placeholder="Buscar gifs..."
+      (keyup.enter)="search()"
+      #txtBuscar
+    />
+    <button type="submit" class="btn btn-primary mb-3" (click)="search()">
+      Buscar
+    </button>
+  </div>
+
+  <div class="p-1">
+    <span class="m-1">POPULAR TAGS:</span>
+    <span
+      *ngFor="let tag of tags"
+      class="badge text-bg-dark m-1"
+      style="cursor: pointer"
+      (click)="searchForTag(tag)"
+      >{{ tag }}</span
+    >
+  </div>
 </div>
