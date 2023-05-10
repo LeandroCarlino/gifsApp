@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GifsService } from '../services/gifs.service';
 
 @Component({
@@ -6,9 +6,13 @@ import { GifsService } from '../services/gifs.service';
   templateUrl: './busqueda.component.html',
   styles: [],
 })
-export class BusquedaComponent {
+export class BusquedaComponent implements OnInit {
   tags: string[] = ['Anime', 'Lofi', 'Developer', 'Gaming', 'Tokyo'];
-  constructor(private gifsService: GifsService) {}
+  constructor(private gifsService: GifsService) { }
+
+  ngOnInit(): void {
+    this.gifsService.buscarGifs('Tokyo')
+  }
 
   @ViewChild('txtBuscar') txtBuscar!: ElementRef<HTMLInputElement>;
 
