@@ -9,7 +9,13 @@ import { Config } from './gif';
  */
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
-  private readonly recurso = httpResource<Config>(() => 'config.json');
+  /**
+   * Se agrega un parámetro único para que GitHub Pages (que cachea con
+   * `max-age=600`) no entregue una config vieja después de rotar la key.
+   * El archivo pesa 40 bytes: no vale la pena cachearlo.
+   */
+  private readonly url = `config.json?v=${Date.now()}`;
+  private readonly recurso = httpResource<Config>(() => this.url);
 
   readonly apiKey = computed(() => this.recurso.value()?.giphyApiKey?.trim() ?? '');
   readonly cargando = this.recurso.isLoading;
