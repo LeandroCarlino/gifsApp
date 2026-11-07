@@ -51,22 +51,6 @@
   color: var(--mudo);
 }
 
-.enlace-codigo {
-  padding: 0.4rem 0.8rem;
-  border: 1px solid var(--linea);
-  border-radius: 999px;
-  color: var(--texto);
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.enlace-codigo:hover {
-  border-color: var(--acento);
-  color: var(--acento);
-}
-
 @media (max-width: 40rem) {
   .cabecera__nota { display: none; }
 }
