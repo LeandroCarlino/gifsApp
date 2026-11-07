@@ -1,0 +1,35 @@
+<a class="salto" href="#contenido">Saltar al contenido</a>
+
+<header class="cabecera">
+  <div class="contenedor cabecera__interior">
+    <a class="marca" routerLink="/">
+      <span class="marca__punto" aria-hidden="true"></span>
+      <span>
+        <strong>GIFS</strong>
+        <small>app</small>
+      </span>
+    </a>
+
+    <p class="cabecera__nota">
+      Buscador de GIFs sobre la API de Giphy
+    </p>
+
+    <a class="enlace-codigo" href="https://github.com/LeandroCarlino/gifsApp" target="_blank" rel="noopener">
+      Código ↗
+    </a>
+  </div>
+</header>
+
+<main id="contenido" class="contenedor principal">
+  <router-outlet />
+</main>
+
+<footer class="pie">
+  <div class="contenedor pie__interior">
+    <span>© {{ anio }} Leandro Carlino</span>
+    <span>
+      GIFs por
+      <a href="https://giphy.com" target="_blank" rel="noopener">Giphy</a>
+    </span>
+  </div>
+</footer>

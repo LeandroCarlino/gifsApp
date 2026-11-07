@@ -1,0 +1,116 @@
+<section class="buscador">
+  <h1>Buscá un GIF</h1>
+  <form class="buscador__form" (submit)="enviar($event)" role="search">
+    <label class="sr-only" for="q">Buscar GIFs</label>
+    <input
+      id="q"
+      type="search"
+      name="q"
+      [value]="termino()"
+      (input)="termino.set(valorDe($event))"
+      placeholder="gatos, anime, lofi, developer…"
+      autocomplete="off"
+      spellcheck="false"
+    >
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div class="tags">
+    <span class="tags__titulo">Populares</span>
+    <div class="chips">
+      @for (tag of tags; track tag) {
+        <button type="button" class="chip" (click)="buscar(tag)">{{ tag }}</button>
+      }
+    </div>
+  </div>
+</section>
+
+@if (gifs.error(); as mensaje) {
+  <p class="aviso" role="alert">{{ mensaje }}</p>
+}
+
+<div class="layout">
+  <aside class="historial" aria-labelledby="historial-titulo">
+    <div class="historial__cabecera">
+      <h2 id="historial-titulo">Historial</h2>
+      @if (gifs.historial().length) {
+        <button type="button" class="historial__limpiar" (click)="limpiarHistorial()">
+          Limpiar
+        </button>
+      }
+    </div>
+
+    @if (gifs.historial().length) {
+      <ul>
+        @for (item of gifs.historial(); track item) {
+          <li>
+            <button type="button" (click)="buscar(item)">{{ item }}</button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="historial__vacio">Tus búsquedas van a aparecer acá.</p>
+    }
+  </aside>
+
+  <section class="resultados" aria-live="polite" aria-busy="{{ gifs.cargando() }}">
+    @if (gifs.cargando()) {
+      <div class="grilla">
+        @for (i of [1,2,3,4,5,6,7,8]; track i) {
+          <div class="esqueleto" aria-hidden="true"></div>
+        }
+      </div>
+      <p class="sr-only">Buscando GIFs…</p>
+    } @else if (gifs.hayResultados()) {
+      <p class="resultados__conteo">
+        {{ gifs.resultados().length }} GIFs de
+        <strong>{{ gifs.ultima() || "tu última búsqueda" }}</strong>
+      </p>
+
+      <ul class="grilla">
+        @for (gif of gifs.resultados(); track gif.id; let i = $index) {
+          <li>
+            <button type="button" class="tarjeta" (click)="abrir(i)" [attr.aria-label]="'Ampliar: ' + (gif.title || 'GIF')">
+              <img
+                [src]="gif.images.fixed_width.url"
+                [alt]="gif.title || 'GIF animado'"
+                [width]="gif.images.fixed_width.width"
+                [height]="gif.images.fixed_width.height"
+                loading="lazy"
+                decoding="async"
+              >
+              <span class="tarjeta__titulo">{{ gif.title || "Sin título" }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="vacio">
+        <p class="vacio__titulo">Todavía no buscaste nada</p>
+        <p>Probá con una etiqueta de arriba o escribí lo que quieras.</p>
+      </div>
+    }
+  </section>
+</div>
+
+<dialog
+  #visor
+  class="visor"
+  aria-label="Visor de GIF"
+  (keydown)="alPresionar($event)"
+  (click)="alClicFondo($event)"
+>
+  @if (gifActivo(); as gif) {
+    <figure class="visor__figura">
+      <img [src]="gif.images.downsized_medium.url" [alt]="gif.title || 'GIF animado'">
+      <figcaption>{{ gif.title || "Sin título" }}</figcaption>
+    </figure>
+
+    <a class="visor__enlace" [href]="gif.url" target="_blank" rel="noopener">
+      Ver en Giphy ↗
+    </a>
+    <button type="button" class="visor__cerrar" (click)="cerrar()" aria-label="Cerrar">&times;</button>
+    <button type="button" class="visor__nav visor__nav--prev" (click)="mover(-1)" aria-label="Anterior">&#8249;</button>
+    <button type="button" class="visor__nav visor__nav--next" (click)="mover(1)" aria-label="Siguiente">&#8250;</button>
+  }
+</dialog>
