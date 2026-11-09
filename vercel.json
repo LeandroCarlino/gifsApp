@@ -1,0 +1,11 @@
+{
+  "buildCommand": "node -e \"require('fs').writeFileSync('public/config.json', JSON.stringify({giphyApiKey: process.env.GIPHY_API_KEY || ''}))\" && npm run build",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "dist/gifs-app/browser",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
